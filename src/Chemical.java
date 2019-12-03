@@ -1,6 +1,6 @@
 
 public class Chemical {
-
+	
 	private char type;
 	
 	private Chemical next;
