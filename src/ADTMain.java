@@ -15,11 +15,13 @@ public class ADTMain {
 		int V = scan.nextInt();
 		int D = scan.nextInt();
 		
-		// Skips past all the lines containing the valid and disease genes
-		for (int i = 0; i < V + D; i += 1)
+		String[] validGenes = new String[V];
+		String[] diseaseGenes = new String[D];
+		
+		for (int i = 0; i < V; i += 1)
 		{
-			scan.nextLine();
-		}
+			validGenes[i] = scan.nextLine();
+		} 
 		
 		int M = scan.nextInt();
 		
