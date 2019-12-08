@@ -17,8 +17,7 @@ public class ADTQueue {
 		length = 0;
 	}
 	
-	@Override
-	public void enqueue(NodeClass<T> n) {
+	public void enqueue(Gene n) {
 
 		NodeClass<T> temp = head.getNext();
 		
