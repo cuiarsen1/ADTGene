@@ -7,9 +7,6 @@ public class ADTMain {
 		// BFS, you know as soon as you find a possibility it is the biggest, as the more levels there are, 
 		// the smaller the probability is for sure, as the probabilities are so small that basically the more 
 		// levels, the smaller the probability
-		
-		/*Generate a random mutation, compare to the list of valid and disease genes, if it doesnt exist, 
-		get rid of it. If it does, add it to list of possible mutations for that gene.*/
 
 		// If number of steps reaches M, or gene reaches target gene, stop applying new mutations.
 		
@@ -24,9 +21,11 @@ public class ADTMain {
 		
 		// First big for loop is the 3 rules to apply, second for loop is applying the rules to all the adjacent indexes (rule 2 and 3)
 		
-		// 2D array, first index is the parent gene, second index is the gene it mutates into.
+		FileReader solver = new FileReader("InputFile.txt");
+		
+		
 		
 		
 	}
-
+	
 }
