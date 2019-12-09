@@ -1,25 +1,27 @@
 
 public class ArrayQueue<T> {
 	
-	private Node<T>[] queue;
+	private ArrayList<T> queue;
+	
+	private int length;
 	
 	public ArrayQueue(int n)
 	{
-		queue = new Node[n];
+		queue = new ArrayList();
 	}
 	
-	public void enqueue(Node<T> n) {
+	public void enqueue(Node<T> start) {
 
-		Node<T>[] temp = queue;
+		ArrayList<T> temp = queue;
 		
-		queue = new Node[temp.length + 1];
+		queue = new ArrayList();
 		
-		for (int i = 0; i < temp.length; i += 1)
+		for (int i = 0; i < temp.size(); i += 1)
 		{
 			queue[i + 1] = temp[i];
 		}
 		
-		queue[0] = n;
+		queue.addNode(start);
 	}
 
 	
@@ -39,11 +41,17 @@ public class ArrayQueue<T> {
 		return object;
 		
 	}
+	
+	public Node<T> peek() {
+		
+		return queue.getNode(queue.size() - 1);
+		
+	}
 
 	
 	public int size() {
 
-		return queue.length;
+		return queue.size();
 	}
 
 	

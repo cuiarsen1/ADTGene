@@ -1,6 +1,10 @@
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class ADTMain {
+	
+	String[] chemical = new String[] {"A", "G", "C", "T"}; // Array of the base chemicals
 	
 	public static void main(String[] args) throws FileNotFoundException {
 
@@ -20,98 +24,214 @@ public class ADTMain {
 		//AGT 1 TGA 3 TCGA
 		
 		// First big for loop is the 3 rules to apply, second for loop is applying the rules to all the adjacent indexes (rule 2 and 3)
-		
-		FileReader solver = new FileReader("InputFile.txt");
 
-		String[] chemical = new String[] {"A", "G", "C", "T"}; // Array of the base chemicals
+		ADTMain main = new ADTMain();
+
+		
+		File file = new File("InputFile.txt");
+		
+		Scanner scan = new Scanner(file);
+		
+		int L = scan.nextInt();
+		
+		int V = scan.nextInt();
+		int D = scan.nextInt();
+		
+		ArrayList<String> validGenes = new ArrayList();
+		
+		for (int i = 0; i < validGenes.size(); i += 1)
+		{
+			validGenes.addNode(new Node(scan.nextLine(), 1));
+		}
+		
+		int M = Integer.parseInt(scan.nextLine());
+		
+		int G = Integer.parseInt(scan.nextLine());
+		
+		ArrayList<String> testArray = new ArrayList(); // Creates array of the genes to test
+		
+		for (int i = 0; i < testArray.size(); i += 1)
+		{
+			String P = scan.next();
+			String Q = scan.next();
+		}
+		
+		
+	}
+
+	public void BFS(String P, String Q, int M, ArrayList<String> validGenes) throws FileNotFoundException {
+		
+		ArrayQueue<Node> queue = new ArrayQueue(0);
+		
+		Node start = new Node(P, 1, 0);
+		
+		queue.enqueue(start);
+		
+		ArrayList<String> successList = new ArrayList();
+		
+		while (!queue.isEmpty())
+		{
+			Node root = queue.peek(); // current root node
+			
+			for (int i = 1; i <= 3; i += 1) // runs through the 3 rules
+			{
+				ArrayList<String> listMutate = Mut(root, validGenes, i); // creates list of valid children
+				
+				if (listMutate.size() > 0)
+				{
+					if (listMutate.getNode(0).getSteps() < M) // if steps hasnt exceed M
+					{
+						for (int j = 0; j < listMutate.size(); j += 1) 
+						{
+							// if one of the children is equal to target gene, add it to the successList
+							if (listMutate.getNode(j).getValue() == Q) 
+							{
+								successList.addNode(listMutate.getNode(i));
+							}
+							
+							queue.enqueue(listMutate.getNode(j)); // 
+						}
+					}
+				}
+				
+			}
+			
+			queue.dequeue();
+			
+			
+		}
+		
+		/*public static void Mutation(){
+			int num_mutation = 0;
+			Node<String> start_gene = new Node<String>(test_case[0][0],1);
+			Node<String> target_gene = new Node<String>(test_case[0][1],1);
+			ArrayQueue <String> queue = new ArrayQueue <String>();
+			ArrayList succeed = new ArrayList();
+			queue.enqueue(start_gene);
+			while(!queue.isEmpty()){
+				Node<String> rootNode = queue.peek();
+				for(int i = 1; i<=3;i++) {
+					ArrayList<String> childrenList = rule(rootNode,i);
+					for(int m = 0; m < childrenList.size(); m++) {
+						if(childrenList.getNode(i).getValue() == target_gene.getValue()) {
+							succeed.addNode(childrenList.getNode(i));
+						}
+						queue.enqueue(childrenList.getNode(i));
+					}
+				}queue.dequeue();
+			}
+			if(succeed.size()!=0) {
+			System.out.println("Yes");
+			double Largest_probability = succeed.getFirstNode().getChance();
+			for(int m = 0; m < succeed.size(); m++) {
+				if(Largest_probability < succeed.getNode(m).getChance()) {
+					Largest_probability = succeed.getNode(m).getChance();
+				}
+			}
+			System.out.println(Largest_probability);
+			}else {
+				System.out.println("No");
+			}		
+						
+			}*/
 		
 		
 	}
 	
-	// Method used to mutate a gene using rule 1, 2 or 3
-	public void Search(String P, String Q, int M) throws FileNotFoundException {
+	public ArrayList<String> Mut(Node gene, ArrayList<String> validGenes, int n)
+	{
+		ArrayList<String> listMutate = new ArrayList(); // List of possible valid/disease mutations to change to in one step
 		
-		ArrayQueue<Node> queue = new ArrayQueue(0);
+		String geneString = gene.toString();
 		
-		
-		
+		double prob = gene.getProb();
+
 		// Strings used for comparisons
 		String part1;
 		String part2;
 		String part3;
 		
-		// Rule 1
-	
-		part1 = geneString.substring(0, 1);
-		part2 = geneString.substring(1, geneString.length() - 1);
-		part3 = geneString.substring(geneString.length() - 1);
+		String mutateTest;
 		
-		mutateTest = part3 + part2 + part1;
-		
-		// Adds all possible mutations to listMutate
-		for (int i = 0; i < solver.validGenes.size(); i += 1)
+		if (n == 1)
 		{
-			if (mutateTest.equals(solver.validGenes.getNode(i)))
-			{
-				Node<Gene> mutation = new Node<Gene>(mutateTest, prob * 0.02);
-				listMutate.addNode(mutation);
-			}
-		
-		}
-	
-		
-		// Rule 2
-		for (int i = 0; i < geneString.length() - 1; i += 1)
-		{	
-			if (geneString.charAt(i) == geneString.charAt(i + 1))
-			{
-				// Checks if the mutated gene is valid
-				
-				part1 = geneString.substring(0, i);
-				part2 = geneString.substring(i + 2);
-				
-				for (int x = 0; x < chemical.length; x += 1)
-				{
-					mutateTest = part1 + chemical[x] + part2;
-					
-					for (int j = 0; j < solver.validGenes.size(); j += 1)
-					{
-						if (mutateTest.equals(solver.validGenes.getNode(x)))
-						{
-							Node<String> mutation = new Node<String>(mutateTest);
-							listMutate.addNode(mutation);
-						}
-					}
-					
-				}
-			}
+			part1 = geneString.substring(0, 1);
+			part2 = geneString.substring(1, geneString.length() - 1);
+			part3 = geneString.substring(geneString.length() - 1);
 			
+			mutateTest = part3 + part2 + part1;
+			
+			// Adds all possible mutations to listMutate
+			for (int i = 0; i < validGenes.size(); i += 1)
+			{
+				if (mutateTest.equals(validGenes.getNode(i)))
+				{
+					Node mutation = new Node(mutateTest, prob * 0.02, gene.getSteps() + 1);
+					listMutate.addNode(mutation);
+				}
+			
+			}
 		}
 		
-		
-		// Rule 3
-		for (int i = 0; i < geneString.length() - 1; i += 1)
+		if (n == 2)
 		{
-			if ((geneString.charAt(i) == 'G' && geneString.charAt(i + 1) == 'T') || (geneString.charAt(i) == 'T' && geneString.charAt(i + 1) == 'G'))
-			{
-				part1 = geneString.substring(0, i + 1);
-				part2 = geneString.substring(i + 1);
-				
-				for (int x = 0; x < chemical.length; x += 1)
+			for (int i = 0; i < geneString.length() - 1; i += 1)
+			{	
+				if (geneString.charAt(i) == geneString.charAt(i + 1))
 				{
-					mutateTest = part1 + chemical[x] + part2;
+					// Checks if the mutated gene is valid
 					
-					for (int j = 0; j < solver.validGenes.size(); j += 1)
+					part1 = geneString.substring(0, i);
+					part2 = geneString.substring(i + 2);
+					
+					for (int x = 0; x < chemical.length; x += 1)
 					{
-						if (mutateTest.equals(solver.validGenes.getNode(x)))
+						mutateTest = part1 + chemical[x] + part2;
+						
+						for (int j = 0; j < validGenes.size(); j += 1)
 						{
-							Node<String> mutation = new Node<String>(mutateTest);
-							listMutate.addNode(mutation);
+							if (mutateTest.equals(validGenes.getNode(x)))
+							{
+								Node mutation = new Node(mutateTest, prob * 0.06, gene.getSteps() + 1);
+								listMutate.addNode(mutation);
+							}
+						}
+						
+					}
+				}
+				
+			}
+		}
+		
+		if (n == 3)
+		{
+			for (int i = 0; i < geneString.length() - 1; i += 1)
+			{
+				if ((geneString.charAt(i) == 'G' && geneString.charAt(i + 1) == 'T') || (geneString.charAt(i) == 'T' && geneString.charAt(i + 1) == 'G'))
+				{
+					part1 = geneString.substring(0, i + 1);
+					part2 = geneString.substring(i + 1);
+					
+					for (int x = 0; x < chemical.length; x += 1)
+					{
+						mutateTest = part1 + chemical[x] + part2;
+						
+						for (int j = 0; j < validGenes.size(); j += 1)
+						{
+							if (mutateTest.equals(validGenes.getNode(x)))
+							{
+								Node mutation = new Node(mutateTest, prob * 0.08, gene.getSteps() + 1);
+								listMutate.addNode(mutation);
+							}
 						}
 					}
 				}
 			}
 		}
+		
+		return listMutate;
+	
+		
 	}
 	
 }

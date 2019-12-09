@@ -2,10 +2,16 @@
 public class ArrayList<T> {
 	
 	private Node<T>[] list;
+	
+	private int length;
 
-	public ArrayList(int n)
+	public ArrayList()
 	{
-		list = new Node[n];
+		int listLength = 30000;
+		
+		length = 0;
+		
+		list = new Node[listLength];
 	}
 	
 	public void addNode(Node<T> n) {
