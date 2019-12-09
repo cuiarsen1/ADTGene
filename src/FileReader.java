@@ -28,7 +28,7 @@ public class FileReader {
 		V = scan.nextInt();
 		D = scan.nextInt();
 		
-		validGenes = new ArrayList<String>(V + D);
+		validGenes = new ArrayList(V + D);
 		
 		for (int i = 0; i < validGenes.size(); i += 1)
 		{
@@ -39,7 +39,7 @@ public class FileReader {
 		
 		G = Integer.parseInt(scan.nextLine());
 		
-		testArray = new ArrayList<String>(G); // Creates array of the genes to test
+		testArray = new ArrayList(G); // Creates array of the genes to test
 		
 		for (int i = 0; i < testArray.size(); i += 1)
 		{

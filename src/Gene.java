@@ -4,7 +4,9 @@ public class Gene {
 	
 	private String geneString; // String containing the gene itself
 	
-	private ArrayList<String> listMutate; // List of possible valid/disease mutations to change to in one step
+	private double prob; // Current probability to reach this gene
+	
+	private ArrayList<Gene> listMutate; // List of possible valid/disease mutations to change to in one step
 	
 	private String mutateTest; // String used to test possible mutations
 	
@@ -12,11 +14,13 @@ public class Gene {
 	
 	FileReader solver; // Used to access variables of the Filesolver class
 	
-	public Gene(String s) throws FileNotFoundException // validGenes is list of valid and disease genes you get from file
+	public Gene(String s, double probability) throws FileNotFoundException // validGenes is list of valid and disease genes you get from file
 	{
 		geneString = s;
 		
-		listMutate = new ArrayList<String>(0);
+		prob = probability;
+		
+		listMutate = new ArrayList<Gene>(0);
 		
 		chemical = new String[] {"A", "G", "C", "T"};
 		
@@ -25,7 +29,7 @@ public class Gene {
 	}
 	
 	// Method used to mutate a gene using rule 1, 2 or 3
-	public void BFS(String P, String Q, int M) throws FileNotFoundException {
+	public void Search(String P, String Q, int M) throws FileNotFoundException {
 		
 		ArrayQueue<Node> queue = new ArrayQueue(0);
 		
@@ -49,7 +53,7 @@ public class Gene {
 		{
 			if (mutateTest.equals(solver.validGenes.getNode(i)))
 			{
-				Node<String> mutation = new Node<String>(mutateTest);
+				Node<Gene> mutation = new Node<Gene>(mutateTest, prob * 0.02);
 				listMutate.addNode(mutation);
 			}
 		

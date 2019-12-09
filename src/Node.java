@@ -2,9 +2,13 @@ public class Node<T> {
 
 	private T data;
 	
-	public Node(T n)
+	private double prob;
+	
+	public Node(T n, double probability)
 	{
 		data = n;
+		
+		prob = probability;
 	}
 
 	public T getValue() {
@@ -12,3 +16,5 @@ public class Node<T> {
 	}
 	
 }
+
+FIGURE OUT A WAY TO COMBINE NODE AND GENE INTO ONE. THEY SEEM TO BE THE SAME THING

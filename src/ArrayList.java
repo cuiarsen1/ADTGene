@@ -31,7 +31,7 @@ public class ArrayList<T> {
 		
 		for (int i = 0; i < list.length; i += 1)
 		{
-			if (list[i].getValue() == n.getValue())
+			if (list[i].toString() == n.toString())
 			{
 				index = i;
 				
@@ -51,7 +51,7 @@ public class ArrayList<T> {
 	
 	public Node<T> removeNode(int i) {
 		
-		Node<T> node = list[i];
+		Node<T> n = list[i];
 		
 		for (int x = i; x < list.length - 1; x += 1)
 		{
@@ -60,7 +60,7 @@ public class ArrayList<T> {
 		
 		list[list.length - 1] = null;
 		
-		return node;
+		return n;
 	}
 	
 	
