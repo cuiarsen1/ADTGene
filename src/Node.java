@@ -4,7 +4,7 @@ public class Node<T> {
 	
 	private double prob;
 	
-	int steps;
+	private int steps;
 	
 	public Node(T n, double probability, int steps)
 	{
@@ -30,5 +30,3 @@ public class Node<T> {
 	}
 	
 }
-
-//FIGURE OUT A WAY TO COMBINE NODE AND GENE INTO ONE. THEY SEEM TO BE THE SAME THING

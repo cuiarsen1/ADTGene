@@ -1,30 +1,31 @@
 
 public class ArrayQueue<T> {
 	
-	private ArrayList<T> queue;
+	private Node<T>[] queue;
 	
 	private int length;
 	
-	public ArrayQueue(int n)
+	public ArrayQueue()
 	{
-		queue = new ArrayList();
+		int queueSize = 0;
+		
+		queue = new Node[queueSize];
 	}
 	
-	public void enqueue(Node<T> start) {
+	public void enqueue(Node<T> n) {
 
-		ArrayList<T> temp = queue;
+		Node<T>[] temp = queue;
 		
-		queue = new ArrayList();
+		queue = new Node[temp.length + 1];
 		
-		for (int i = 0; i < temp.size(); i += 1)
+		for (int i = 0; i < temp.length; i += 1)
 		{
 			queue[i + 1] = temp[i];
 		}
 		
-		queue.addNode(start);
+		queue[0] = n;
 	}
 
-	
 	public Node<T> dequeue() {
 		
 		Node<T> object = queue[queue.length - 1];
@@ -44,17 +45,16 @@ public class ArrayQueue<T> {
 	
 	public Node<T> peek() {
 		
-		return queue.getNode(queue.size() - 1);
+		return queue[queue.length - 1];
+		
 		
 	}
 
-	
 	public int size() {
 
-		return queue.size();
+		return queue.length;
 	}
 
-	
 	public boolean isEmpty() {
 
 		if (queue.length > 0)
@@ -64,35 +64,5 @@ public class ArrayQueue<T> {
 
 		return true;
 	}
-	
-	
-	
-	public String toString() {
-		
-		String s = "";
-		
-		for (int i = queue.length - 1; i >= 0; i -= 1)
-		{
-			s += queue[i] + " ";
-		}
-		
-		return s;
-	}
-
-	/*public static void main(String[] args) {
-
-		ArrayQueue<Integer> list = new ArrayQueue(0);
-		
-		list.enqueue(new Node(1));
-		list.enqueue(new Node(2));
-		list.enqueue(new Node(3));
-		
-		list.dequeue();
-		
-		System.out.println(list.size());
-		
-		System.out.println(list);
-	}*/
-
 
 }
