@@ -14,7 +14,7 @@ public class ADTMain {
 
 		ADTMain main = new ADTMain(); // Object used to access the methods in the ADTMain class
 		
-		File file = new File("EthanTest.txt");
+		File file = new File("InputFile.txt");
 		
 		Scanner scan = new Scanner(file);
 		

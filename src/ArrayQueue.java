@@ -7,9 +7,11 @@ public class ArrayQueue<T> {
 	
 	public ArrayQueue()
 	{
-		int queueSize = 0;
+		int queueSize = 20005;
 		
 		queue = new Node[queueSize];
+		
+		length = 0;
 	}
 	
 	public void enqueue(Node<T> n) {
@@ -65,4 +67,5 @@ public class ArrayQueue<T> {
 		return true;
 	}
 
+	DO QUEUE SO ITS MORE EFFICIENT
 }
