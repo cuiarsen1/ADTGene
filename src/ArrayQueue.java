@@ -14,10 +14,6 @@ public class ArrayQueue<T> {
 	
 	private int length; // tracks the amount of items in the queue
 	
-	/*Tracks the amount of empty indexes at the front of the queue. This is used
-	so that there is no need to recreate a new queue every time a node is removed*/
-	private int frontRemoved; 
-	
 	public ArrayQueue()
 	{
 		int queueSize = 20000; // size of the array
@@ -25,14 +21,12 @@ public class ArrayQueue<T> {
 		queue = new Node[queueSize];
 		
 		length = 0;
-		
-		frontRemoved = 0;
 	}
 	
 	// adds a node to the end of the queue
 	public void enqueue(Node<T> n) {
 		
-		queue[length + frontRemoved] = n;
+		queue[length] = n;
 		
 		length += 1;
 		
@@ -41,14 +35,15 @@ public class ArrayQueue<T> {
 	// removes the first node from the queue
 	public Node<T> dequeue() {
 		
-		Node<T> node = queue[frontRemoved]; // node to be dequeued
+		Node<T> node = queue[0]; // node to be dequeued
 		
-		queue[frontRemoved] = null; // remove the node
+		// Shifts all the nodes in the queue back by one to get rid of the first node, removing it
+		for (int i = 0; i < length; i += 1)
+		{
+			queue[i] = queue[i + 1];
+		}
 		
 		length -= 1;
-		
-		// increases the amount of indexes to skip at the beginning of the queue, as they are empty
-		frontRemoved += 1; 
 		
 		return node;
 		
@@ -57,7 +52,7 @@ public class ArrayQueue<T> {
 	// returns the first node of the queue
 	public Node<T> peek() {
 		
-		return queue[frontRemoved];
+		return queue[0];
 	
 	}
 

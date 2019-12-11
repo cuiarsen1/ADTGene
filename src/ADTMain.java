@@ -61,7 +61,7 @@ public class ADTMain {
 			testArray[i][1] = Q;
 		}
 		
-		/*for each test case, find out of the starting gene P
+		/*for each test case, find out if the starting gene P
 		can mutate into the target gene Q within M steps*/
 		for (int i = 0; i < G; i += 1)
 		{
@@ -106,8 +106,6 @@ public class ADTMain {
 		
 		int numRules = 3; // Represents the total amount of rules for mutations
 		
-		boolean hitMaxM = false; // tracks whether the algorithm has already reached M mutations
-		
 		// while there are still nodes in the queue
 		while (!queue.isEmpty())
 		{
@@ -138,13 +136,6 @@ public class ADTMain {
 							queue.enqueue(listMutations.getNode(j)); 
 						}
 					}
-					
-					// If total amount of steps has exceeded M, stop searching for new mutations
-					else
-					{
-						hitMaxM = true;
-						break;
-					}
 						
 				}
 				
@@ -154,9 +145,6 @@ public class ADTMain {
 			have found every single mutation that branches off of it*/
 			queue.dequeue();
 			
-			// If total amount of steps has exceeded M, stop searching for new mutations
-			if (hitMaxM == true)
-				break;
 		}
 		
 		double probability = 0;
