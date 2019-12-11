@@ -89,7 +89,8 @@ public class ADTMain {
 	
 	/*Method used to find whether it is possible for gene P to mutate 
 	into gene Q, and outputs the largest probability of it occurring*/
-	public double Search(String P, String Q, int M, String[] validGenes) throws FileNotFoundException {
+	public double Search(String P, String Q, int M, String[] validGenes) 
+			throws FileNotFoundException {
 		
 		ArrayQueue<Node> queue = new ArrayQueue();
 		
@@ -250,7 +251,8 @@ public class ADTMain {
 							not been visited already, add it to listMutations*/
 							if (mutationTest.equals(validGenes[j]) && visited[j] == false)
 							{
-								Node mutation = new Node(mutationTest, prob * rule2, gene.getSteps() + 1);
+								Node mutation = 
+										new Node(mutationTest, prob * rule2, gene.getSteps() + 1);
 								listMutations.addNode(mutation);
 								
 								// sets the valid gene to be visited to prevent repeated mutations
@@ -272,7 +274,8 @@ public class ADTMain {
 			
 			for (int i = 0; i < geneString.length() - 1; i += 1)
 			{
-				if ((geneString.charAt(i) == 'G' && geneString.charAt(i + 1) == 'T') || (geneString.charAt(i) == 'T' && geneString.charAt(i + 1) == 'G'))
+				if ((geneString.charAt(i) == 'G' && geneString.charAt(i + 1) == 'T')
+						|| (geneString.charAt(i) == 'T' && geneString.charAt(i + 1) == 'G'))
 				{
 					part1 = geneString.substring(0, i + 1);
 					part2 = geneString.substring(i + 1);
@@ -288,7 +291,8 @@ public class ADTMain {
 							not been visited already, add it to listMutations*/
 							if (mutationTest.equals(validGenes[j]) && visited[j] == false)
 							{
-								Node mutation = new Node(mutationTest, prob * rule3, gene.getSteps() + 1);
+								Node mutation = 
+										new Node(mutationTest, prob * rule3, gene.getSteps() + 1);
 								listMutations.addNode(mutation);
 								
 								// sets the valid gene to be visited to prevent repeated mutations
