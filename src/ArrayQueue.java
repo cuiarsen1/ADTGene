@@ -1,71 +1,81 @@
+// Arsen Cui
+// ICS4U1-01
+// December 9th, 2019
+// Mr. Radulovic
+// ICS4U1 ADT Assignment
+/*This class is used to create Queue objects, usually of Nodes. It is used when storing mutations 
+of genes when using Breadth First Search. The default size is set to 20000 because there can only 
+be at most 20000 objects stored in the queue at once, as the maximum specified amount of valid
+and diseased genes is 20000. */
 
 public class ArrayQueue<T> {
 	
-	private Node<T>[] queue;
+	private Node<T>[] queue; // Array used to implement the Queue
 	
-	private int length;
+	private int length; // tracks the amount of items in the queue
+	
+	/*Tracks the amount of empty indexes at the front of the queue. This is used
+	so that there is no need to recreate a new queue every time a node is removed*/
+	private int frontRemoved; 
 	
 	public ArrayQueue()
 	{
-		int queueSize = 20005;
+		int queueSize = 20000; // size of the array
 		
 		queue = new Node[queueSize];
 		
 		length = 0;
+		
+		frontRemoved = 0;
 	}
 	
+	// adds a node to the end of the queue
 	public void enqueue(Node<T> n) {
-
-		Node<T>[] temp = queue;
 		
-		queue = new Node[temp.length + 1];
+		queue[length + frontRemoved] = n;
 		
-		for (int i = 0; i < temp.length; i += 1)
-		{
-			queue[i + 1] = temp[i];
-		}
+		length += 1;
 		
-		queue[0] = n;
 	}
 
+	// removes the first node from the queue
 	public Node<T> dequeue() {
 		
-		Node<T> object = queue[queue.length - 1];
+		Node<T> node = queue[frontRemoved]; // node to be dequeued
 		
-		Node<T>[] temp = queue;
+		queue[frontRemoved] = null; // remove the node
 		
-		queue = new Node[temp.length - 1];
+		length -= 1;
 		
-		for (int i = 0; i < queue.length; i += 1)
-		{
-			queue[i] = temp[i];
-		}
+		// increases the amount of indexes to skip at the beginning of the queue, as they are empty
+		frontRemoved += 1; 
 		
-		return object;
+		return node;
 		
 	}
 	
+	// returns the first node of the queue
 	public Node<T> peek() {
 		
-		return queue[queue.length - 1];
-		
-		
+		return queue[frontRemoved];
+	
 	}
 
+	// returns the size of the queue
 	public int size() {
-
-		return queue.length;
+		
+		return length;
 	}
 
+	// returns true if the queue is empty, false if it is not empty
 	public boolean isEmpty() {
-
-		if (queue.length > 0)
+		
+		if (length > 0)
 			return false;
-		else if (queue.length == 0)
+		else if (length == 0)
 			return true;
-
+		
 		return true;
 	}
-
-	DO QUEUE SO ITS MORE EFFICIENT
+	
 }
